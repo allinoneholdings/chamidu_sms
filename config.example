@@ -1,0 +1,11 @@
+# MongoDB Connection String
+MONGODB_URI=mongodb+srv://Yasintha:igcy2001@cluster0.7ch3bpc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+# JWT Secret Key (Change this in production!)
+JWT_SECRET=your_jwt_secret_key_here_change_in_production
+
+# Environment
+NODE_ENV=development
+
+# Port
+PORT=5000
