@@ -30,24 +30,7 @@ A comprehensive student management system built with the MERN stack (MongoDB, Ex
 - Form validation and error handling
 - Toast notifications for user feedback
 
-## Project Structure
 
-```
-student-management-system/
-├── client/                 # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── context/       # React context
-│   │   ├── App.js         # Main app component
-│   │   └── index.js       # Entry point
-│   └── package.json
-├── models/                 # MongoDB models
-├── routes/                 # API routes
-├── middleware/             # Authentication middleware
-├── server.js              # Express server
-└── package.json           # Backend dependencies
-```
 
 ## Database Schema
 
@@ -188,23 +171,6 @@ npm run dev
 - **React Icons** - Icon library
 - **React Toastify** - Toast notifications
 
-## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
 
-## License
-
-This project is licensed under the MIT License.
-
-## Support
-
-For support and questions, please open an issue in the repository.
-
----
-
-**Built with ❤️ for educational excellence**
 
