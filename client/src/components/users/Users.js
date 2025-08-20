@@ -18,7 +18,7 @@ const Users = () => {
     last_name: '',
     email: '',
     password: '',
-    role: 'student'
+    role: 'admin'
   });
 
   // Fetch users from API
@@ -48,9 +48,9 @@ const Users = () => {
     const rolePrefix = {
       'super_admin': 'SA',
       'admin': 'AD',
-      'student': 'ST'
+      'teacher': 'TC'
     };
-    const prefix = rolePrefix[role] || 'ST';
+    const prefix = rolePrefix[role] || 'AD';
     const number = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
     return `${prefix}${number}`;
   };
@@ -64,7 +64,7 @@ const Users = () => {
       last_name: '',
       email: '',
       password: '',
-      role: 'student'
+      role: 'admin'
     });
     setShowModal(true);
   };
@@ -173,8 +173,8 @@ const Users = () => {
         return <FaUserShield className="role-icon super-admin" />;
       case 'admin':
         return <FaUser className="role-icon admin" />;
-      case 'student':
-        return <FaGraduationCap className="role-icon student" />;
+      case 'teacher':
+        return <FaGraduationCap className="role-icon teacher" />;
       default:
         return <FaUser className="role-icon" />;
     }
@@ -184,7 +184,7 @@ const Users = () => {
     const roleClasses = {
       'super_admin': 'badge-super-admin',
       'admin': 'badge-admin',
-      'student': 'badge-student'
+      'teacher': 'badge-teacher'
     };
     
     return <span className={`role-badge ${roleClasses[role]}`}>{role.replace('_', ' ')}</span>;
@@ -359,8 +359,8 @@ const Users = () => {
                       onChange={handleInputChange}
                       required
                     >
-                      <option value="student">Student</option>
                       <option value="admin">Admin</option>
+                      <option value="teacher">Teacher</option>
                       <option value="super_admin">Super Admin</option>
                     </select>
                   </div>

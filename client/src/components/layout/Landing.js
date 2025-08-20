@@ -20,10 +20,7 @@ const Landing = () => {
               Streamline administrative tasks and focus on what matters most - student success.
             </p>
             <div className="hero-buttons">
-              <Link to="/login" className="btn btn-primary">
-                Get Started
-              </Link>
-              <Link to="/about" className="btn btn-secondary">
+              <Link to="/about" className="btn btn-primary">
                 Learn More
               </Link>
             </div>

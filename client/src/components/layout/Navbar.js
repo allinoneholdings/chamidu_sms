@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { FaBars, FaTimes, FaGraduationCap, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { FaBars, FaTimes, FaGraduationCap, FaUser, FaSignOutAlt, FaChalkboardTeacher } from 'react-icons/fa';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -70,7 +70,19 @@ const Navbar = () => {
             Testimonials
           </Link>
           
-          {isAuthenticated && (
+          {isAuthenticated && user?.role === 'teacher' && (
+            <Link to="/teacher" className="nav-link teacher-nav-link" onClick={closeMenu}>
+              Teacher Dashboard
+            </Link>
+          )}
+          
+          {isAuthenticated && (user?.role === 'admin' || user?.role === 'super_admin') && (
+            <Link to="/dashboard" className="nav-link" onClick={closeMenu}>
+              Dashboard
+            </Link>
+          )}
+          
+          {isAuthenticated && user?.role === 'student' && (
             <Link to="/dashboard" className="nav-link" onClick={closeMenu}>
               Dashboard
             </Link>
@@ -83,7 +95,12 @@ const Navbar = () => {
               <div className="user-info" onClick={toggleUserMenu}>
                 <FaUser className="user-icon" />
                 <span className="user-name">{user?.first_name} {user?.last_name}</span>
-                <span className="user-role">({user?.role})</span>
+                <span className={`user-role ${user?.role === 'teacher' ? 'teacher-role' : ''}`}>
+                  {user?.role === 'teacher' ? '👨‍🏫 Teacher' : 
+                   user?.role === 'admin' ? '👨‍💼 Admin' :
+                   user?.role === 'super_admin' ? '👑 Super Admin' :
+                   user?.role === 'student' ? '👨‍🎓 Student' : user?.role}
+                </span>
               </div>
               <button className="logout-btn" onClick={(e) => {
                 e.stopPropagation();
@@ -93,13 +110,7 @@ const Navbar = () => {
                 <span>Logout</span>
               </button>
             </div>
-          ) : (
-            <div className="auth-buttons">
-              <Link to="/login" className="btn btn-primary">
-                Login
-              </Link>
-            </div>
-          )}
+          ) : null}
         </div>
 
         <button className="navbar-toggle" onClick={toggleMenu}>

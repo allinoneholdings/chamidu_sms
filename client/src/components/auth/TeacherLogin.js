@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import { FaUser, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaUser, FaLock, FaEye, FaEyeSlash, FaChalkboardTeacher, FaArrowLeft } from 'react-icons/fa';
 import './Auth.css';
 
-const Login = () => {
+const TeacherLogin = () => {
   const [formData, setFormData] = useState({
     user_name: '',
     password: ''
@@ -13,14 +13,18 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
+    if (isAuthenticated && user) {
+      if (user.role === 'teacher') {
+        navigate('/teacher');
+      } else {
+        navigate('/dashboard');
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, user, navigate]);
 
   const { user_name, password } = formData;
 
@@ -41,8 +45,14 @@ const Login = () => {
     try {
       const result = await login(formData);
       if (result.success) {
-        toast.success('Login successful!');
-        navigate('/dashboard');
+        if (result.user && result.user.role === 'teacher') {
+          toast.success('Teacher login successful!');
+          navigate('/teacher');
+        } else {
+          toast.error('This login is for teachers only. Please use the appropriate login portal.');
+          // Reset form
+          setFormData({ user_name: '', password: '' });
+        }
       } else {
         toast.error(result.message);
       }
@@ -54,24 +64,24 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
+    <div className="auth-container teacher-login">
+      <div className="auth-card teacher-card">
         <div className="auth-header">
           <div className="logo-section">
-            <div className="logo-icon">🎓</div>
-            <h1>Excellence Academy</h1>
+            <div className="logo-icon teacher-icon">👨‍🏫</div>
+            <h1>Teacher Portal</h1>
           </div>
-          <h2>Welcome Back</h2>
-          <p>Sign in to access your dashboard</p>
+          <h2>Teacher Access</h2>
+          <p>Sign in to access your teaching dashboard</p>
         </div>
 
         <form onSubmit={onSubmit} className="auth-form">
-          <div className="form-group">
+          <div className="form-group ">
             <label htmlFor="user_name" className="form-label">
               Username
             </label>
             <div className="input-group">
-              <FaUser className="input-icon" style={{ marginRight: '8px' }} /> {/* Added margin to the icon */}
+              <FaUser className="input-icon" style={{ marginRight: '8px' }} />
               <input
                 type="text"
                 id="user_name"
@@ -79,9 +89,9 @@ const Login = () => {
                 value={user_name}
                 onChange={onChange}
                 className="form-control"
-                placeholder="Enter your username"
+                placeholder="Enter your teacher username"
                 required
-                style={{ paddingLeft: '50px' }} // Added padding to the left to create space for the icon
+                style={{ paddingLeft: '50px' }}
               />
             </div>
           </div>
@@ -91,7 +101,7 @@ const Login = () => {
               Password      
             </label>
             <div className="input-group">
-              <FaLock className="input-icon" style={{ marginRight: '8px' }} /> {/* Added margin to the icon */}
+              <FaLock className="input-icon" style={{ marginRight: '8px' }} />
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
@@ -101,7 +111,7 @@ const Login = () => {
                 className="form-control"
                 placeholder="Enter your password"
                 required
-                style={{ paddingLeft: '50px' }} // Added padding to the left to create space for the icon
+                style={{ paddingLeft: '50px' }}
               />
               <button
                 type="button"
@@ -115,7 +125,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="btn btn-primary auth-btn"
+            className="btn btn-primary teacher-btn"
             disabled={loading}
           >
             {loading ? (
@@ -124,32 +134,25 @@ const Login = () => {
                 Signing In...
               </>
             ) : (
-              'Sign In'
+              <>
+                <FaChalkboardTeacher /> Sign In to Teacher Portal
+              </>
             )}
           </button>
         </form>
 
-        <div className="demo-accounts">
-          <h4>Demo Accounts</h4>
-          <div className="account-info">
-            <div className="account-item">
-              <strong>Super Admin:</strong> superadmin / admin123
-            </div>
-            <div className="account-item">
-              <strong>Admin:</strong> admin / admin123
-            </div>
-          </div>
-        </div>
-
+        
         <div className="auth-footer">
-          <Link to="/" className="auth-link">
-            Back to Home
+          <Link to="/" className="back-link">
+            <FaArrowLeft /> Back to Home
           </Link>
+          <div className="teacher-note">
+            <FaChalkboardTeacher /> Teacher Access Only
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;   
-
+export default TeacherLogin;

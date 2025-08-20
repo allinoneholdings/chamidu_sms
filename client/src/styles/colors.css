@@ -1,7 +1,6 @@
-@import './styles/colors.css';
-/* CSS Variables for Color Theme System */
+/* Color System for Student Management System */
 :root {
-    /* Primary Colors */
+    /* Primary Colors - Blue Theme */
     --primary-50: #eff6ff;
     --primary-100: #dbeafe;
     --primary-200: #bfdbfe;
@@ -13,7 +12,7 @@
     --primary-800: #1e40af;
     --primary-900: #1e3a8a;
     --primary-950: #172554;
-    /* Secondary Colors */
+    /* Secondary Colors - Green Theme */
     --secondary-50: #f0fdf4;
     --secondary-100: #dcfce7;
     --secondary-200: #bbf7d0;
@@ -25,7 +24,7 @@
     --secondary-800: #166534;
     --secondary-900: #14532d;
     --secondary-950: #052e16;
-    /* Tertiary Colors */
+    /* Tertiary Colors - Orange Theme */
     --tertiary-50: #fef7ee;
     --tertiary-100: #fdedd6;
     --tertiary-200: #fbd7ad;
@@ -51,21 +50,45 @@
     --neutral-950: #020617;
     /* Semantic Colors */
     --success-50: #f0fdf4;
+    --success-100: #dcfce7;
+    --success-200: #bbf7d0;
+    --success-300: #86efac;
+    --success-400: #4ade80;
     --success-500: #22c55e;
     --success-600: #16a34a;
     --success-700: #15803d;
+    --success-800: #166534;
+    --success-900: #14532d;
     --warning-50: #fffbeb;
+    --warning-100: #fef3c7;
+    --warning-200: #fde68a;
+    --warning-300: #fcd34d;
+    --warning-400: #fbbf24;
     --warning-500: #f59e0b;
     --warning-600: #d97706;
     --warning-700: #b45309;
+    --warning-800: #92400e;
+    --warning-900: #78350f;
     --error-50: #fef2f2;
+    --error-100: #fee2e2;
+    --error-200: #fecaca;
+    --error-300: #fca5a5;
+    --error-400: #f87171;
     --error-500: #ef4444;
     --error-600: #dc2626;
     --error-700: #b91c1c;
+    --error-800: #991b1b;
+    --error-900: #7f1d1d;
     --info-50: #eff6ff;
+    --info-100: #dbeafe;
+    --info-200: #bfdbfe;
+    --info-300: #93c5fd;
+    --info-400: #60a5fa;
     --info-500: #3b82f6;
     --info-600: #2563eb;
     --info-700: #1d4ed8;
+    --info-800: #1e40af;
+    --info-900: #1e3a8a;
     /* Status Colors */
     --status-present: var(--success-500);
     --status-absent: var(--error-500);
@@ -75,20 +98,27 @@
     --bg-primary: var(--neutral-50);
     --bg-secondary: #ffffff;
     --bg-tertiary: var(--neutral-100);
+    --bg-card: #ffffff;
+    --bg-sidebar: var(--neutral-800);
+    --bg-header: #ffffff;
     /* Text Colors */
     --text-primary: var(--neutral-900);
     --text-secondary: var(--neutral-700);
     --text-tertiary: var(--neutral-500);
     --text-muted: var(--neutral-400);
+    --text-inverse: #ffffff;
+    --text-link: var(--primary-600);
     /* Border Colors */
     --border-primary: var(--neutral-200);
     --border-secondary: var(--neutral-300);
     --border-focus: var(--primary-500);
+    --border-divider: var(--neutral-200);
     /* Shadow Colors */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     /* Gradient Colors */
     --gradient-primary: linear-gradient(135deg, var(--primary-500), var(--primary-700));
     --gradient-secondary: linear-gradient(135deg, var(--secondary-500), var(--secondary-700));
@@ -97,21 +127,16 @@
     --gradient-warning: linear-gradient(135deg, var(--warning-500), var(--warning-700));
     --gradient-error: linear-gradient(135deg, var(--error-500), var(--error-700));
     --gradient-info: linear-gradient(135deg, var(--info-500), var(--info-700));
-}
-/* Base Styles */
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-}
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
+    --gradient-neutral: linear-gradient(135deg, var(--neutral-500), var(--neutral-700));
+    /* Component Specific Colors */
+    --navbar-bg: var(--bg-header);
+    --navbar-text: var(--text-primary);
+    --sidebar-bg: var(--bg-sidebar);
+    --sidebar-text: var(--text-inverse);
+    --card-bg: var(--bg-card);
+    --input-bg: var(--bg-secondary);
+    --input-border: var(--border-primary);
+    --input-focus: var(--border-focus);
 }
 /* Utility Classes for Colors */
 .text-primary {
@@ -126,6 +151,12 @@ code {
 .text-muted {
     color: var(--text-muted);
 }
+.text-inverse {
+    color: var(--text-inverse);
+}
+.text-link {
+    color: var(--text-link);
+}
 .bg-primary {
     background-color: var(--bg-primary);
 }
@@ -134,6 +165,15 @@ code {
 }
 .bg-tertiary {
     background-color: var(--bg-tertiary);
+}
+.bg-card {
+    background-color: var(--bg-card);
+}
+.bg-sidebar {
+    background-color: var(--bg-sidebar);
+}
+.bg-header {
+    background-color: var(--bg-header);
 }
 .border-primary {
     border-color: var(--border-primary);
@@ -144,39 +184,121 @@ code {
 .border-focus {
     border-color: var(--border-focus);
 }
+.border-divider {
+    border-color: var(--border-divider);
+}
 /* Button Color Variants */
 .btn-primary {
     background: var(--gradient-primary);
-    color: white;
+    color: var(--text-inverse);
     border: none;
+    box-shadow: var(--shadow-sm);
 }
 .btn-secondary {
     background: var(--gradient-secondary);
-    color: white;
+    color: var(--text-inverse);
     border: none;
+    box-shadow: var(--shadow-sm);
 }
 .btn-tertiary {
     background: var(--gradient-tertiary);
-    color: white;
+    color: var(--text-inverse);
     border: none;
+    box-shadow: var(--shadow-sm);
 }
 .btn-success {
     background: var(--gradient-success);
-    color: white;
+    color: var(--text-inverse);
     border: none;
+    box-shadow: var(--shadow-sm);
 }
 .btn-warning {
     background: var(--gradient-warning);
-    color: white;
+    color: var(--text-inverse);
     border: none;
+    box-shadow: var(--shadow-sm);
 }
 .btn-error {
     background: var(--gradient-error);
-    color: white;
+    color: var(--text-inverse);
     border: none;
+    box-shadow: var(--shadow-sm);
 }
 .btn-info {
     background: var(--gradient-info);
-    color: white;
+    color: var(--text-inverse);
     border: none;
+    box-shadow: var(--shadow-sm);
+}
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--border-primary);
+}
+.btn-outline:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-secondary);
+}
+/* Status Badge Colors */
+.badge-present {
+    background: var(--status-present);
+    color: var(--text-inverse);
+}
+.badge-absent {
+    background: var(--status-absent);
+    color: var(--text-inverse);
+}
+.badge-late {
+    background: var(--status-late);
+    color: var(--text-inverse);
+}
+.badge-excused {
+    background: var(--status-excused);
+    color: var(--text-inverse);
+}
+/* Form Input Colors */
+.input-primary {
+    border-color: var(--input-border);
+    background-color: var(--input-bg);
+}
+.input-primary:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+/* Card Colors */
+.card-primary {
+    background: var(--card-bg);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-sm);
+}
+.card-primary:hover {
+    box-shadow: var(--shadow-md);
+}
+/* Navigation Colors */
+.nav-primary {
+    background: var(--navbar-bg);
+    color: var(--navbar-text);
+    border-bottom: 1px solid var(--border-divider);
+}
+.sidebar-primary {
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+}
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: var(--neutral-900);
+        --bg-secondary: var(--neutral-800);
+        --bg-tertiary: var(--neutral-700);
+        --bg-card: var(--neutral-800);
+        --bg-sidebar: var(--neutral-900);
+        --bg-header: var(--neutral-800);
+        --text-primary: var(--neutral-100);
+        --text-secondary: var(--neutral-200);
+        --text-tertiary: var(--neutral-300);
+        --text-muted: var(--neutral-400);
+        --border-primary: var(--neutral-700);
+        --border-secondary: var(--neutral-600);
+        --border-divider: var(--neutral-700);
+    }
 }

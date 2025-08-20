@@ -14,8 +14,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://Yasintha:igcy2001@cluster0.7ch3bpc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+// MongoDB Connection - Use config values if env vars not available
+const mongoUri = process.env.MONGODB_URI ;
+const jwtSecret = process.env.JWT_SECRET ;
+
+mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -27,7 +30,9 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/students', require('./routes/students'));
 app.use('/api/classes', require('./routes/classes'));
-app.use('/api/dashboard', require('./routes/dashboard'));
+// app.use('/api/dashboard', require('./routes/dashboard'));
+app.use('/api/attendance', require('./routes/attendance'));
+// app.use('/api/teachers', require('./routes/teachers'));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

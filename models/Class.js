@@ -23,6 +23,11 @@ const classSchema = new mongoose.Schema({
     type: String,
     enum: ['Fall', 'Spring', 'Summer'],
     default: 'Fall'
+  },
+  teacher_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 }, {
   timestamps: true

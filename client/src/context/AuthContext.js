@@ -84,7 +84,11 @@ export const AuthProvider = ({ children }) => {
         type: 'LOGIN_SUCCESS',
         payload: res.data
       });
-      return { success: true };
+      return { 
+        success: true, 
+        user: res.data.user,
+        token: res.data.token
+      };
     } catch (err) {
       dispatch({
         type: 'LOGIN_FAIL'

@@ -226,21 +226,21 @@ const Dashboard = () => {
         {/* Statistics Cards */}
         <div className="stats-grid">
           <div className="stat-card">
-            <div className="stat-icon students">
+            <div className="stat-icon admissions">
               <FaUsers />
             </div>
             <div className="stat-content">
               <h3>{stats.totalStudents.toLocaleString()}</h3>
               <p>Total Students</p>
               <div className={`stat-change ${stats.studentGrowth > 0 ? 'positive' : stats.studentGrowth < 0 ? 'negative' : 'neutral'}`}>
-                <FaChartLine /> 
+                <FaChartLine/> 
                 {stats.studentGrowth > 0 ? `+${stats.studentGrowth}%` : stats.studentGrowth < 0 ? `${stats.studentGrowth}%` : '0%'} this month
               </div>
             </div>
           </div>
 
           <div className="stat-card">
-            <div className="stat-icon classes">
+            <div className="stat-icon  admissions">
               <FaGraduationCap />
             </div>
             <div className="stat-content">
@@ -254,21 +254,21 @@ const Dashboard = () => {
           </div>
 
           <div className="stat-card">
-            <div className="stat-icon users">
+            <div className="stat-icon admissions">
               <FaChalkboardTeacher />
             </div>
             <div className="stat-content">
               <h3>{stats.totalUsers}</h3>
               <p>Total Users</p>
               <div className="stat-change neutral">
-                <FaChartLine  /> No change
+                <FaChartLine size={0.8}/> No change
               </div>
             </div>
           </div>
 
           <div className="stat-card">
-            <div className="stat-icon admissions">
-              <FaChartLine />
+            <div className="stat-icon admissions ">
+              <FaChartLine  />
             </div>
             <div className="stat-content">
               <h3>{stats.recentAdmissions}</h3>
@@ -396,14 +396,16 @@ const Dashboard = () => {
         <div className="additional-actions">
           <h2>Additional Tools</h2>
           <div className="tools-grid">
-            <div className="tool-card">
-              <div className="tool-icon">
-                <FaClipboardList />
+            {user?.role === 'teacher' && (
+              <div className="tool-card teacher-tool">
+                <div className="tool-icon">
+                  <FaChalkboardTeacher />
+                </div>
+                <h3>Teacher Dashboard</h3>
+                <p>Access your classes and mark student attendance</p>
+                <Link to="/teacher" className="btn btn-primary">Go to Teacher Dashboard</Link>
               </div>
-              <h3>Attendance Tracker</h3>
-              <p>Monitor student attendance and generate reports</p>
-              <button className="btn btn-outline">Access Tool</button>
-            </div>
+            )}
             
             <div className="tool-card">
               <div className="tool-icon">

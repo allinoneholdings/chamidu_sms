@@ -7,6 +7,7 @@ import './Classes.css';
 const Classes = () => {
   const { user } = useAuth();
   const [classes, setClasses] = useState([]);
+  const [teachers, setTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingClass, setEditingClass] = useState(null);
@@ -15,7 +16,8 @@ const Classes = () => {
     description: '',
     capacity: '',
     academic_year: new Date().getFullYear() + '-' + (new Date().getFullYear() + 1),
-    semester: 'Fall'
+    semester: 'Fall',
+    teacher_id: ''
   });
 
   // Fetch classes from API
@@ -41,6 +43,26 @@ const Classes = () => {
     }
   };
 
+  // Fetch teachers from API
+  const fetchTeachers = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('/api/users?role=teacher', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setTeachers(data);
+      } else {
+        console.error('Failed to fetch teachers');
+      }
+    } catch (error) {
+      console.error('Error fetching teachers:', error);
+    }
+  };
+
   const handleAddClass = () => {
     setEditingClass(null);
     setFormData({
@@ -48,7 +70,8 @@ const Classes = () => {
       description: '',
       capacity: '',
       academic_year: new Date().getFullYear() + '-' + (new Date().getFullYear() + 1),
-      semester: 'Fall'
+      semester: 'Fall',
+      teacher_id: ''
     });
     setShowModal(true);
   };
@@ -60,7 +83,8 @@ const Classes = () => {
       description: classItem.description || '',
       capacity: classItem.capacity?.toString() || '',
       academic_year: classItem.academic_year,
-      semester: classItem.semester || 'Fall'
+      semester: classItem.semester || 'Fall',
+      teacher_id: classItem.teacher_id || ''
     });
     setShowModal(true);
   };
@@ -92,6 +116,13 @@ const Classes = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate that a teacher is selected
+    if (!formData.teacher_id) {
+      toast.error('Please select a teacher for this class');
+      return;
+    }
+    
     try {
       const token = localStorage.getItem('token');
       const url = editingClass ? `/api/classes/${editingClass._id}` : '/api/classes';
@@ -105,7 +136,8 @@ const Classes = () => {
         },
         body: JSON.stringify({
           ...formData,
-          capacity: parseInt(formData.capacity)
+          capacity: parseInt(formData.capacity),
+          teacher_id: formData.teacher_id
         })
       });
 
@@ -132,6 +164,7 @@ const Classes = () => {
 
   useEffect(() => {
     fetchClasses();
+    fetchTeachers(); // Fetch teachers when the component mounts
   }, []);
 
   if (loading) {
@@ -208,6 +241,18 @@ const Classes = () => {
                     <div className="detail-item">
                       <span className="detail-label">Semester:</span>
                       <span className="detail-value">{classItem.semester}</span>
+                    </div>
+                    <div className="detail-item">
+                      <span className="detail-label">Teacher:</span>
+                      <span className="detail-value">
+                        {classItem.teacher_id ? 
+                          (() => {
+                            const teacher = teachers.find(t => t._id === classItem.teacher_id);
+                            return teacher ? `${teacher.first_name} ${teacher.last_name}` : 'Unknown Teacher';
+                          })() 
+                          : 'No Teacher Assigned'
+                        }
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -301,6 +346,27 @@ const Classes = () => {
                     pattern="[0-9]{4}-[0-9]{4}"
                     title="Format: YYYY-YYYY (e.g., 2024-2025)"
                   />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="teacher_id">Assign Teacher *</label>
+                  <select
+                    id="teacher_id"
+                    name="teacher_id"
+                    value={formData.teacher_id}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select a teacher</option>
+                    {teachers.map(teacher => (
+                      <option key={teacher._id} value={teacher._id}>
+                        {teacher.first_name} {teacher.last_name} ({teacher.user_name})
+                      </option>
+                    ))}
+                  </select>
+                  {teachers.length === 0 && (
+                    <small className="form-help">No teachers available. Please create teachers first.</small>
+                  )}
                 </div>
 
                 <div className="modal-actions">

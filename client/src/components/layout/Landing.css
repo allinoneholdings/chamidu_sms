@@ -479,3 +479,57 @@
         transform: translateY(-10px);
     }
 }
+/* Quick Access Section */
+.quick-access {
+    padding: 80px 0;
+    background: #f8f9fa;
+}
+.quick-access h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 50px;
+}
+.access-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.access-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+.access-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border-color: #667eea;
+}
+.access-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: block;
+}
+.access-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+.access-card p {
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+.access-card .btn {
+    padding: 12px 25px;
+    font-size: 0.95rem;
+}
