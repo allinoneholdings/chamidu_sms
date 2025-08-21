@@ -243,9 +243,19 @@ router.get('/class/:classId/summary', auth, async (req, res) => {
 
     let dateFilter = {};
     if (startDate && endDate) {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      end.setHours(23, 59, 59, 999);
+      console.log('Received date parameters:', { startDate, endDate });
+      
+      // Create dates in local timezone to avoid timezone issues
+      const start = new Date(startDate + 'T00:00:00');
+      const end = new Date(endDate + 'T23:59:59.999');
+      
+      console.log('Processed dates:', { 
+        start: start.toISOString(), 
+        end: end.toISOString(),
+        startLocal: start.toString(),
+        endLocal: end.toString()
+      });
+      
       dateFilter = { date: { $gte: start, $lte: end } };
     }
 

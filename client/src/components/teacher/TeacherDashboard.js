@@ -12,6 +12,8 @@ import {
   FaEdit,
   FaChartBar
 } from 'react-icons/fa';
+import AttendanceSummaryCards from './AttendanceSummaryCards';
+import AttendanceReport from './AttendanceReport';
 import './TeacherDashboard.css';
 
 const TeacherDashboard = () => {
@@ -23,6 +25,14 @@ const TeacherDashboard = () => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  
+  // Attendance report modal state
+  const [reportModal, setReportModal] = useState({
+    isOpen: false,
+    selectedStatus: null,
+    timeframe: null,
+    dateRange: null
+  });
 
   useEffect(() => {
     if (user && user._id) {
@@ -233,6 +243,27 @@ const TeacherDashboard = () => {
     }
   };
 
+  const handleSummaryCardClick = (status, dateRangeInfo) => {
+    setReportModal({
+      isOpen: true,
+      selectedStatus: status,
+      timeframe: dateRangeInfo.timeframe,
+      dateRange: {
+        startDate: dateRangeInfo.startDate,
+        endDate: dateRangeInfo.endDate
+      }
+    });
+  };
+
+  const closeReportModal = () => {
+    setReportModal({
+      isOpen: false,
+      selectedStatus: null,
+      timeframe: null,
+      dateRange: null
+    });
+  };
+
   if (loading) {
     return (
       <div className="teacher-dashboard">
@@ -307,6 +338,13 @@ const TeacherDashboard = () => {
             <p><strong>Capacity:</strong> {selectedClass.capacity} students</p>
             <p><strong>Current Students:</strong> {students.length}</p>
           </div>
+        )}
+
+        {selectedClass && (
+          <AttendanceSummaryCards
+            selectedClass={selectedClass}
+            onCardClick={handleSummaryCardClick}
+          />
         )}
 
         {selectedClass && students.length > 0 && (
@@ -391,6 +429,15 @@ const TeacherDashboard = () => {
           </div>
         )}
       </div>
+
+      <AttendanceReport
+        isOpen={reportModal.isOpen}
+        onClose={closeReportModal}
+        selectedStatus={reportModal.selectedStatus}
+        timeframe={reportModal.timeframe}
+        dateRange={reportModal.dateRange}
+        selectedClass={selectedClass}
+      />
     </div>
   );
 };
